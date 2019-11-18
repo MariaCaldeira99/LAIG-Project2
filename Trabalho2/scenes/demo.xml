@@ -1,0 +1,1587 @@
+<lxs>
+    <scene root="demoRoot" axis_length="5"/>
+
+    <views default="Default">
+        <perspective id="Default" near="0.1" far="500" angle="45">
+            <from x="30" y="15" z="30" />
+            <to x="0" y="-2" z="0" />
+        </perspective>
+        <perspective id="Up View" near="0.1" far="100" angle="90">
+            <from x="4" y="20" z="4" />
+            <to x="-1" y="-20" z="-1" />
+        </perspective>
+        <perspective id="Sofa View" near="0.1" far="100" angle="45">
+            <from x="1" y="3" z="3" />
+            <to x="-1" y="-1" z="20" />
+        </perspective>
+        <perspective id="Door View" near="0.1" far="100" angle="45">
+            <from x="5" y="3" z="5" />
+            <to x="-15" y="0" z="-5" />
+        </perspective>
+        <ortho id="Ortho View" near="0.5" far="75" left="-25" right="25" top="15" bottom="-15">
+            <from x="30" y="50" z="30" />
+            <to x="0" y="-2" z="0" />
+        </ortho>
+    </views>
+
+    <globals>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.0" g="0.0" b="0.0" a="1.0" />
+    </globals>
+
+    <lights>
+        <omni id="Light" enabled="1">
+            <location x="0" y="11.9" z="0" w="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </omni>
+
+        <spot id="Table Spotlight" enabled="1" angle="15" exponent="100">
+            <location x="-4.15" y="11" z="0.35" w="1.0" />
+            <target x="0.0" y="-4.0" z="0.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0"/>
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0"/>
+            <specular r="1.0" g="1.0" b="1.0" a="1.0"/>
+        </spot>
+
+        <spot id="TV Screen Light" enabled="0" angle="45" exponent="100">
+            <location x="2" y="1.5" z="12.0" w="1.0" />
+            <target x="0.0" y="-3" z="-22.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="0.0"/>
+            <diffuse r="0.0" g="1.0" b="1.0" a="1.0"/>
+            <specular r="0.0" g="0.0" b="0.0" a="0.0"/>
+        </spot>
+    </lights>
+
+    <textures>
+        <texture id="woodTexture" file="scenes/images/wood.jpg" />
+        <texture id="floorTexture" file="scenes/images/floor.jpg" />
+        <texture id="BarChairLegText" file="scenes/images/leg.jpg" />
+        <texture id="BarChairTopText" file="scenes/images/cinza.png" />
+        <texture id="BarCounterBottomText" file="scenes/images/marble.jpg" />
+        <texture id="Wall" file="scenes/images/wall.jpg" />
+        <texture id="furniture" file="scenes/images/furniture.jpg" />
+        <texture id="tvScreen" file="scenes/images/tv.png" />
+        <texture id="sofaTexture" file="scenes/images/lightblue.jpg" />
+    </textures>
+
+    <materials>
+        <material id="demoMaterial" shininess="5">
+            <emission r="0.1" g="0.1" b="0.1" a="0.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+        </material>
+        <material id="redMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="blackMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0" a="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="whiteMaterial" shininess="10">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.6" g="1.0" b="1.0" a="1.0" />
+            <specular r="0.6" g="1.0" b="1.0" a="1.0" />
+        </material>
+        <material id="greyMaterial" shininess="10">
+            <emission r="0.3" g="0.3" b="0.3" a="0" />
+            <ambient r="0" g="0.0" b="0.0" a="0.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="0.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+        </material>
+    </materials>
+
+    <transformations>
+        <transformation id="BarChairLegTransf"> <!--kitchen chair leg transformation-->
+            <rotate axis="x" angle="90" />
+            <translate x="0" y="0" z="-1"/>
+        </transformation>
+        <transformation id="BarChairTop">   <!--kitchen chair seat transformation-->
+            <rotate axis="z" angle="90" />
+            <scale x="0.25" y="1.4" z="1.4" />
+            <translate x="4" y="0" z="0"/>
+        </transformation>
+        <transformation id="BarChairBottom">    <!--kitchen chair bottom transformation-->
+            <scale x="0.1" y="0.1" z="0.1"/>
+            <rotate axis="x" angle="90" />
+        </transformation>
+        <transformation id="Counter">   <!--kitchen counters transformation-->
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+            <scale x="0.8" y="0.8" z="0.7"/>
+            <translate x="0" y="0" z="-1.5"/>
+        </transformation>
+        <transformation id="BarCounterTop"> <!--kitchen bottom counter top sides transformation-->
+            <scale x="2.5" y="1" z="1" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+            <translate x="0" y="0" z="-1.2"/>
+            <translate x="0.21" y="-0.21" z="0"/>
+        </transformation>
+        <transformation id="BarCounterTop1">    <!--kitchen bottom counter top transformation-->
+            <scale x="2.5" y="1" z="1" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+            <translate x="-0.3" y="0" z="1.2"/>
+        </transformation>
+        <transformation id="BarCounter4Top">    <!--kitchen bottom counter top sides transformation for counters 4,5,6 and 7-->
+            <scale x="1" y="1" z="3.4" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+            <translate x="0" y="0" z="-1.2"/>
+            <translate x="-0.19" y="-0.31" z="0"/>
+        </transformation>
+        <transformation id="BarCounter4Top1">   <!--kitchen bottom counter top transformation for counters 4,5,6 and 7-->
+            <scale x="1" y="1" z="3.4" />
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+            <translate x="-0.1" y="-0.35" z="1.2"/>
+        </transformation>
+        <transformation id="BarCounterTop2">    <!--top part of the kitchen top counters-->
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+            <translate x="0" y="0" z="1"/>
+            <scale x="0.8" y="0.8" z="0.8"/>
+        </transformation>
+        <transformation id="BarCounterTop3">
+            <rotate axis="x" angle="90" />
+            <scale x="0.8" y="0.8" z="0.8"/>
+        </transformation>
+        <transformation id="Sofa">  <!--Sofa bottom parts Transformation-->
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
+        <transformation id="SofaTop">   <!--Sofa bottom top parts Transformation-->
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+        </transformation>
+        <transformation id="SofaSide">  <!--Sofa arm rest side parts Transformation-->
+            <scale x="0.5" y="1.2" z="1.5"/>
+            <translate x="-0.5" y="0.6" z="-0.2"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
+        <transformation id="SofaSideTop">   <!--Sofa arm rest top parts Transformation-->
+            <scale x="0.5" y="1" z="1.5"/>
+            <translate x="-0.5" y="0.72" z="-0.2"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+        </transformation>
+        <transformation id="SofaBack">  <!--Sofa back side parts Transformation-->
+            <scale x="5.05" y="2.5" z="0.5"/>
+            <translate x="0.49" y="0.6" z="-2.6"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
+        <transformation id="SofaBackTop">   <!--Sofa back top parts Transformation-->
+            <scale x="5.05" y="2.5" z="0.5"/>
+            <translate x="0.49" y="0.6" z="-2.6"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+        </transformation>
+        <transformation id="Table"> <!--Table Transformation-->
+            <translate x="0" y="1.5" z="0"/>
+            <scale x="2" y="1" z="3.5"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
+        <transformation id="Table1">    <!--Small Table Trasformation-->
+            <translate x="0" y="1.5" z="0"/>
+            <scale x="1.7" y="1" z="3"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="y" angle="180" />
+        </transformation>
+        <transformation id="TableLeg">  <!--Table legs Transformation-->
+            <scale x="0.3" y="0.8" z="0.3"/>
+            <rotate axis="x" angle="-90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
+        <transformation id="TableChairBack">    <!--Table chairs back-->
+            <translate x="0.7" y="0.7" z="-0.7"/>
+            <scale x="1" y="1" z="0.9"/>
+            <rotate axis="z" angle="90" />
+        </transformation>
+        <transformation id="TableChairLeg"> <!--table chairs legs-->
+            <scale x="0.6" y="0.7" z="0.6"/>
+            <rotate axis="x" angle="90" />
+        </transformation>
+        <transformation id="Wall">  <!--House walls-->
+            <scale x="0.1" y="30" z="16.24" />
+            <translate x="-72" y="0.2" z="0.255"/>
+            <rotate axis="x" angle="90" />
+            <rotate axis="z" angle="45" />
+        </transformation>
+    </transformations>
+
+    <primitives>
+        <primitive id="BarChairLeg">    <!--kitchen chair leg-->
+            <cylinder stacks="5" slices="20" height="1" top="0.07" base="0.07"/>
+        </primitive>
+        <primitive id="BarChairTop">    <!--kitchen chair seat-->
+            <sphere radius="0.2" slices="50" stacks="50"/>
+        </primitive>
+        <primitive id="BarChairBottom"> <!--kitchen chair bottom-->
+            <torus inner="0.5" outer="1.0" slices="50" loops="50" />
+        </primitive>
+        <primitive id="BarCounter"> <!--kitchen counters-->
+            <cylinder stacks="4" slices="4" height="1.5" top="0.7" base="0.7"/>
+        </primitive>
+        <primitive id="BarCounterTop">  <!--sides of the top parts of the bottom kitchen counters-->
+            <cylinder stacks="4" slices="4" height="0.2" top="0.7" base="0.7"/>
+        </primitive>
+        <primitive id="BarCounterTop1"> <!--top part of the top parts of the bottom kitchen counters-->
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5"/>
+        </primitive>
+        <primitive id="Sofa">   <!--Bottom parts of the sofa-->
+            <cylinder stacks="4" slices="4" height="0.5" top="0.7" base="0.7"/>
+        </primitive>
+        <primitive id="SofaSide">   <!--Sofa arm rests-->
+            <cylinder stacks="4" slices="4" height="0.6" top="0.7" base="0.7"/>
+        </primitive>
+        <primitive id="Table">  <!--top part of the table-->
+            <cylinder stacks="4" slices="4" height="0.3" top="0.6" base="0.6"/>
+        </primitive>
+        <primitive id="TableLeg">   <!--table legs-->
+            <cylinder stacks="10" slices="10" height="1.5" top="0.4" base="0.2"/>
+        </primitive>
+        <primitive id="TableChairBack"> <!--Chair back part-->
+            <triangle x1="0" y1="0" z1="0" x2="0.8" y2="0" z2="0.2" x3="0-2" y3="0" z3="0.8"/>
+        </primitive>
+        <primitive id="plane">
+            <plane npartsU="50" npartsV="50" />
+        </primitive>
+        <primitive id="patch">
+          <patch npartsU="50" npartsV="50" npointsU="4" npointsV="2">
+                <controlpoint xx="3.0" yy="0.0"  zz="0.0" />
+                <controlpoint xx="3.0" yy="0.0"  zz="3.0" />
+                <controlpoint xx="3.0" yy="2.0"  zz="0.0" />
+                <controlpoint xx="3.0" yy="2.0"  zz="3.0" />
+                <controlpoint xx="0.0" yy="2.0"  zz="0.0" />
+                <controlpoint xx="0.0" yy="2.0"  zz="3.0" />
+                <controlpoint xx="0.0" yy="0.0"  zz="0.0" />
+                <controlpoint xx="0.0" yy="0.0"  zz="3.0" />
+          </patch>
+        </primitive >
+    </primitives>
+
+    <components>
+        <!-- BAR CHAIR PARTS  -->
+        <component id="BarChairLeg">    <!--Kitchen chair leg-->
+            <transformation>
+                <transformationref id="BarChairLegTransf"/>
+            </transformation>
+            <materials>
+                <material id='inherit' />
+            </materials>
+            <texture id="BarChairLegText"/>
+            <children>
+                <primitiveref id="BarChairLeg" />
+            </children>
+        </component>
+        <component id="BarChairTop">    <!--Kitchen chair seat-->
+            <transformation>
+                <transformationref id="BarChairTop"/>
+            </transformation>
+            <materials>
+                <material id='inherit' />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarChairTop" />
+            </children>
+        </component>
+        <component id="BarChairBottom"> <!--Kitchen chair bottom-->
+            <transformation>
+                <transformationref id="BarChairBottom"/>
+            </transformation>
+            <materials>
+                <material id='inherit' />
+            </materials>
+            <texture id="BarChairLegText"/>
+            <children>
+                <primitiveref id="BarChairBottom" />
+            </children>
+        </component>
+
+        <!--BAR CHAIRS-->
+        <component id="BarChair1">  <!--First chair shown in the kitchen area-->
+            <transformation>
+            </transformation>
+            <materials>
+                <material id='demoMaterial' />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarChairLeg"/>
+                <componentref id="BarChairTop"/>
+                <componentref id="BarChairBottom"/>
+            </children>
+        </component>
+        <component id="BarChair2">  <!--Second chair shown in the kitchen area-->
+            <transformation>
+                <translate x="0.8" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarChairLeg"/>
+                <componentref id="BarChairTop"/>
+                <componentref id="BarChairBottom"/>
+            </children>
+        </component>
+        <component id="BarChair3">  <!--Third chair shown in the kitchen area-->
+            <transformation>
+                <translate x="1.6" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarChairLeg"/>
+                <componentref id="BarChairTop"/>
+                <componentref id="BarChairBottom"/>
+            </children>
+        </component>
+
+        <!--Counters-->
+
+        <component id="BarCounterBottom">   <!--Bottom counter in the kitchen-->
+            <transformation>
+                <transformationref id="Counter"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarCounterBottomText"/>
+            <children>
+                <primitiveref id="BarCounter" />
+            </children>
+        </component>
+        <component id="BarCounterBottomAlt">            <!--Bottom Counter alterated. Like this the counter can get beside the wall-->
+            <transformation>
+                <scale x="0.8" y="0.7" z="0.9"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+                <translate x="0" y="0" z="-1.5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarCounterBottomText"/>
+            <children>
+                <primitiveref id="BarCounter" />
+            </children>
+        </component>
+        <component id="BarCounterTop">  <!--Sides of the top of the bottom counters 1,2,3,8,9 and 10-->
+            <transformation>
+                <transformationref id="BarCounterTop"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="BarCounter4Top"> <!--Sides of the top of the bottom counters 4,5,6,and 7-->
+            <transformation>
+                <transformationref id="BarCounter4Top"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="BarCounterTop1">            <!--Top part of the bottom counters 1,2,3,8,9 and 10-->
+            <transformation>
+                <transformationref id="BarCounterTop1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="BarCounter4Top1">    <!--Top part of the bottom counters 4,5,6,and 7-->
+            <transformation>
+                <transformationref id="BarCounter4Top1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="BarCounterTop2"> <!--Upside part of the top counters-->
+            <transformation>
+                <transformationref id="BarCounterTop2"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="BarCounterTop3">
+            <transformation>
+                <transformationref id="BarCounterTop3"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="BarChairTopText"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="BarCounter1"> <!--1st kitchen bottom counter-->
+            <transformation>
+                <translate x="0" y="0" z="-1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+                <componentref id="BarCounterTop"/>
+                <componentref id="BarCounterTop1"/>
+            </children>
+        </component>
+        <component id="BarCounter2">    <!--2nd kitchen bottom counter-->
+            <transformation>
+                <translate x="0.8" y="0" z="-1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+            </children>
+        </component>
+        <component id="BarCounter3">    <!--3rd kitchen bottom counter-->
+            <transformation>
+                <translate x="1.6" y="0" z="-1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+            </children>
+        </component>
+        <component id="BarCounter4">    <!--4th kitchen bottom counter-->
+            <transformation>
+                <translate x="2.4" y="0" z="-1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+                <componentref id="BarCounter4Top"/>
+                <componentref id="BarCounter4Top1"/>
+            </children>
+        </component>
+        <component id="BarCounter5">    <!--5th kitchen bottom counter-->
+            <transformation>
+                <translate x="2.4" y="0" z="-1.8"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+            </children>
+        </component>
+        <component id="BarCounter6">    <!--6th kitchen bottom counter-->
+            <transformation>
+                <translate x="2.4" y="0" z="-2.6"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+            </children>
+        </component>
+        <component id="BarCounter7"> <!--7th kitchen bottom counter-->
+            <transformation>
+                <translate x="2.4" y="0" z="-3.45"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottomAlt"/> 
+            </children>
+        </component>
+        <component id="BarCounter8">    <!--8th kitchen bottom counter-->
+            <transformation>
+                <translate x="1.6" y="0" z="-3.4"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottomAlt"/>
+            </children>
+        </component>
+        <component id="BarCounter9">    <!--9th kitchen bottom counter-->
+            <transformation>
+                <translate x="0.8" y="0" z="-3.4"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottomAlt"/>
+            </children>
+        </component>
+        <component id="BarCounter10">   <!--10th kitchen bottom counter-->
+            <transformation>
+                <translate x="0" y="0" z="-3.4"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottomAlt"/>
+                <componentref id="BarCounterTop"/>
+                <componentref id="BarCounterTop1"/>
+            </children>
+        </component>
+        <component id="CounterTop1">            <!--Kitchen Top Counter-->
+            <transformation>
+                <translate x="0" y="2" z="-3.5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+                <componentref id="BarCounterTop2"/>
+                <componentref id="BarCounterTop2"/>
+            </children>
+        </component>
+        <component id="CounterTop2">            <!--Kitchen Top Counter-->
+            <transformation>
+                <translate x="0.8" y="2" z="-3.5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+                <componentref id="BarCounterTop2"/>
+                <componentref id="BarCounterTop2"/>
+            </children>
+        </component>
+        <component id="CounterTop3">            <!--Kitchen Top Counter-->
+            <transformation>
+                <translate x="1.6" y="2" z="-3.5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+                <componentref id="BarCounterTop2"/>
+                <componentref id="BarCounterTop2"/>
+            </children>
+        </component>
+        <component id="CounterTop4">            <!--Kitchen Top Counter-->
+            <transformation>
+                <translate x="2.4" y="2" z="-3.5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_t="0" length_s="0"/>
+            <children>
+                <componentref id="BarCounterBottom"/>
+                <componentref id="BarCounterTop2"/>
+                <componentref id="BarCounterTop2"/>
+            </children>
+        </component>
+
+        <!-- SOFA SEATS -->
+        <component id="SofaSeat">   <!--Sofa Bottom (part where we seat)-->
+            <transformation>
+                <transformationref id="Sofa"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="Sofa" />
+            </children>
+        </component>
+        <component id="SofaSeat1">  <!--1st part of the sofa bottom-->
+            <transformation>
+                <scale x="1.5" y="1" z="3.5" />
+                <translate x="0.5" y="0.5" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="SofaSeat"/>
+            </children>
+        </component>
+        <component id="SofaSeat2">  <!--2nd part of the sofa bottom-->
+            <transformation>
+                <scale x="3.5" y="1" z="1.5" />
+                <translate x="0.92" y="0.5" z="-0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="SofaSeat"/>
+            </children>
+        </component>
+        <component id="SofaSeatTop">    <!--Top of sofa bottom-->
+            <transformation>
+                <transformationref id="SofaTop"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="SofaSeatTop1">   <!--Top of the 1st part of the sofa bottom-->
+            <transformation>
+                <scale x="3.5" y="1" z="1.5"/>
+                <translate x="0.92" y="0.5" z="-0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="SofaSeatTop"/>
+            </children>
+        </component>
+        <component id="SofaSeatTop2">   <!--Top of the 2nd part of the sofa bottom-->
+            <transformation>
+                <scale x="1.5" y="1" z="3.5"/>
+                <translate x="0.5" y="0.5" z="0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="SofaSeatTop"/>
+            </children>
+        </component>
+
+        <!-- SOFA ARM RESTS -->
+        <component id="SofaSide1">  <!--Right sofa arm rest-->
+            <transformation>
+                <transformationref id="SofaSide"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="SofaSide" />
+            </children>
+        </component>
+        <component id="SofaSide2">  <!--Left sofa arm rest-->
+            <transformation>
+                <translate x="5.45" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="SofaSide1"/>
+            </children>
+        </component>
+        <component id="SofaSideTop1">   <!--Top part of the Right sofa arm rest-->
+            <transformation>
+                <transformationref id="SofaSideTop"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="SofaSideTop2">   <!--Top part of the Left sofa arm rest-->
+            <transformation>
+                <translate x="5.45" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="SofaSideTop1"/>
+            </children>
+        </component>
+
+        <!-- SOFA BACK  -->
+        <component id="SofaBack"> <!--Back part of the sofa-->
+            <transformation>
+                <transformationref id="SofaBack"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="SofaSide" />
+            </children>
+        </component>
+        <component id="SofaBackTop"> <!--Top part of the sofa back-->
+            <transformation>
+                <transformationref id="SofaBackTop"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+
+        <!--SOFA-->
+        <component id="SofaComplete">   <!--Completed Sofa-->
+            <transformation>
+                <scale x="0.8" y="1" z="1"/>
+                <translate x="-1.5" y="0" z="5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sofaTexture" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="SofaSeat1" />
+                <componentref id="SofaSeat2" />
+                <componentref id="SofaSeatTop1" />
+                <componentref id="SofaSeatTop2" />
+                <componentref id="SofaSide1" />
+                <componentref id="SofaSide2" />
+                <componentref id="SofaSideTop1" />
+                <componentref id="SofaSideTop2" />
+                <componentref id="SofaBack" />
+                <componentref id="SofaBackTop" />
+            </children>
+        </component>
+
+        <!--TABLE-->
+        <component id="TableTop">   <!--Sides of the Top part of the table-->
+            <transformation>
+                <transformationref id="Table"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="Table" />
+            </children>
+        </component>
+        <component id="TableTop1">  <!--Top part of the table-->
+            <transformation>
+                <transformationref id="Table1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="TableLeg">   <!--Table legs-->
+            <transformation>
+                <transformationref id="TableLeg"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="TableLeg" />
+            </children>
+        </component>
+        <component id="TableLeg1"> <!--1st table leg-->
+            <transformation>
+                <translate x="0.6" y="0" z="-1.2"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableLeg" />
+            </children>
+        </component>
+        <component id="TableLeg2">  <!--2nd table leg-->
+            <transformation>
+                <translate x="-0.6" y="0" z="-1.2"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableLeg" />
+            </children>
+        </component>
+        <component id="TableLeg3">  <!--3rd table leg-->
+            <transformation>
+                <translate x="0.6" y="0" z="1.2"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableLeg" />
+            </children>
+        </component>
+        <component id="TableLeg4">  <!--4th table leg-->
+            <transformation>
+                <translate x="-0.6" y="0" z="1.2"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableLeg" />
+            </children>
+        </component>
+        <component id="Table">  <!--Completed table-->
+            <transformation>
+                <translate x="-4.5" y="0" z="-1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="woodTexture" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="TableTop" />
+                <componentref id="TableTop1" />
+                <componentref id="TableLeg1" />
+                <componentref id="TableLeg2" />
+                <componentref id="TableLeg3" />
+                <componentref id="TableLeg4" />
+            </children>
+        </component>
+
+        <!-- TABLE CHAIR PARTS -->
+        <component id="TableChairBack"> <!--Back of the table-->
+            <transformation>
+                <transformationref id="TableChairBack"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="TableChairBack" />
+            </children>
+        </component>
+        <component id="TableChairTop">  <!--Part we seat-->
+            <transformation>
+                <scale x="0.7" y="0.7" z="0.7"/>
+                <translate x="0.5" y="1" z="-0.5"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="TableChairLeg">  <!--Leg Chairs-->
+            <transformation>
+                <transformationref id="TableChairLeg"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <primitiveref id="BarChairLeg" />
+            </children>
+        </component>
+        <component id="TableChairLeg1"> <!--1st leg-->
+            <transformation>
+                <translate x="0.1" y="0.7" z="-0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChairLeg" />
+            </children>
+        </component>
+        <component id="TableChairLeg2"> <!--2nd leg-->
+            <transformation>
+                <translate x="0.6" y="0.7" z="-0.2"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChairLeg" />
+            </children>
+        </component>
+        <component id="TableChairLeg3"> <!--3rd leg-->
+            <transformation>
+                <translate x="0.1" y="0.7" z="-0.6"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChairLeg" />
+            </children>
+        </component>
+        <component id="TableChairLeg4"> <!--4th leg-->
+            <transformation>
+                <translate x="0.6" y="0.7" z="-0.6"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChairLeg" />
+            </children>
+        </component>
+
+        <!-- TABLE CHAIRS -->
+        <component id="TableChair"> <!--Chairs in table--> <!--4th chair-->
+            <transformation>
+                <translate x="-3.5" y="0" z="-1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="woodTexture"/>
+            <children>
+                <componentref id="TableChairTop" />
+                <componentref id="TableChairBack" />
+                <componentref id="TableChairLeg1" />
+                <componentref id="TableChairLeg2" />
+                <componentref id="TableChairLeg3" />
+                <componentref id="TableChairLeg4" />
+            </children>
+        </component>
+        <component id="TableChair1">    <!--1st chair-->
+            <transformation>
+                <translate x="0" y="0" z="1"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChair" />
+            </children>
+        </component>
+        <component id="TableChair2">    <!--2nd chair-->
+            <transformation>
+                <translate x="-9" y="0" z="-1.8"/>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChair" />
+            </children>
+        </component>
+        <component id="TableChair3">    <!--3rd chair-->
+            <transformation>
+                <translate x="-9" y="0" z="-2.8"/>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="TableChair" />
+            </children>
+        </component>
+
+
+        <!-- FLOORS  -->
+        <component id="Floor">            <!--INTERIOR FLOOR-->
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+                <scale x="12" y="16" z="14"/>
+                <translate x="0.1" y="0.26" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="floorTexture"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="ExteriorFloor">            <!--EXTERIOR FLOOR-->
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+                <scale x="14" y="16" z="17"/>
+                <translate x="-0.85" y="0.26" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="woodTexture" length_s="1" length_t="1"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+
+        <!--WALL-->
+
+        <component id="Wall">            <!--FRONT WALL-->
+            <transformation>
+                <transformationref id="Wall"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="Wall1">            <!--RIGHT WALL-->
+            <transformation>
+                <scale x="12.1" y="30" z="0.1" />
+                <translate x="-0.1" y="0.2" z="-39"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="Wall2">            <!--LEFT WALL-->
+            <transformation>
+                <translate x="0" y="0" z="16"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="Wall1" />
+            </children>
+        </component>
+        <component id="Wall3Part1">            <!--BACK WALL PART-->
+            <transformation>
+                <scale x="0.1" y="30" z="2" />
+                <translate x="48" y="0.2" z="5.6"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="Wall3Part2">            <!--BACK WALL PART-->
+            <transformation>
+                <scale x="0.1" y="10" z="4.5" />
+                <translate x="48" y="0.2" z="1.78"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="Wall3Part3">            <!--BACK WALL PART-->
+            <transformation>
+                <scale x="0.1" y="23" z="1" />
+                <translate x="48" y="0.2" z="5.4"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="Wall3Part4">            <!--BACK WALL PART-->
+            <transformation>
+                <scale x="0.1" y="7" z="7" />
+                <translate x="48" y="0.856" z="0.963"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="Wall3Part5">            <!--BACK WALL PART-->
+            <transformation>
+                <scale x="0.1" y="30" z="7.3" />
+                <translate x="48" y="0.2" z="-0.04"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="Wall"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+
+        <!--CENTRE TABLE-->
+
+        <component id="SmallTable">
+            <transformation>
+                <scale x="0.8" y="0.4" z="0.6"/>
+                <translate x="4" y="0" z="9"/>
+                <rotate axis="y" angle="90"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="Table" />
+            </children>
+        </component>
+
+        <!--TV TABLE-->
+
+        <component id="TVTableBottom">  <!--TV table sides-->
+            <transformation>
+                <scale x="2.5" y="0.6" z="1"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="blackMaterial" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <primitiveref id="BarCounter" />
+            </children>
+        </component>
+        <component id="TVTableTop"> <!--TV table top-->
+            <transformation>
+                <scale x="2.5" y="0.6" z="1"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+
+        <component id="TVTable">    <!--TV table-->
+            <transformation>
+                <translate x="2" y="0.8" z="11"/>
+            </transformation>
+            <materials>
+                <material id="redMaterial" />
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <componentref id="TVTableBottom" />
+                <componentref id="TVTableTop" />
+            </children>
+        </component>
+
+        <!--TV-->
+
+        <component id="TVCenter">   <!--TV part-->
+            <transformation>
+                <scale x="2" y="8" z="0.2"/>
+                <translate x="0" y="0.2" z="0"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="tvScreen" length="1" length_t="1"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="TVBottom">   <!--TV support-->
+            <transformation>
+                <rotate axis="x" angle="90" />
+                <scale x="1" y="1" z="0.3"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <primitiveref id="BarChairLeg" />
+            </children>
+        </component>
+        <component id="TV">
+            <transformation>
+                <translate x="2" y="1" z="11"/>
+            </transformation>
+            <materials>
+                <material id="blackMaterial" />
+                <material id="greyMaterial" />
+            </materials>
+            <texture id="none" length_s ="0" length_t="0"/>
+            <children>
+                <componentref id="TVCenter" />
+                <componentref id="TVBottom" />
+            </children>
+        </component>
+
+        <!--LIVING ROOM CABINET-->
+
+        <component id="FurnitureBottom">    <!--Furniture sides-->
+            <transformation>
+                <scale x="1" y="1.5" z="3"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="furniture"/>
+            <children>
+                <primitiveref id="BarCounter" />
+            </children>
+        </component>
+        <component id="FurnitureTop">   <!--Furniture top-->
+            <transformation>
+                <scale x="1" y="1" z="3"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="furniture"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="Furniture">
+            <transformation>
+                <translate x="-6.7" y="2" z="5"/>
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="furniture"/>
+            <children>
+                <componentref id="FurnitureTop" />
+                <componentref id="FurnitureBottom" />
+            </children>
+        </component>
+
+        <!--OUTSIDE CHAIR PARTS-->
+
+        <component id="PoolChairTop">   <!--exterior chairs bottom sides (part where we lay)-->
+            <transformation>
+                <scale x="2" y="1" z="1"/>
+                <translate x="0.4" y="0.2" z="-0.4"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sofaTexture"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="PoolChairTop1">  <!--exterior chairs bottom top (part where we lay)-->
+            <transformation>
+                <scale x="2" y="1" z="1"/>
+                <translate x="0.4" y="0.2" z="-0.4"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sofaTexture"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="PoolChairBack">  <!--Back part oh the chairs-->
+            <transformation>
+                <scale x="0.2" y="4" z="1"/>
+                <translate x="-0.5" y="0.25" z="-0.4"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sofaTexture"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="PoolChairBack1"> <!--Top part of the back-->
+            <transformation>
+                <scale x="0.2" y="4" z="1"/>
+                <translate x="-0.5" y="0.25" z="-0.4"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="y" angle="180" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="sofaTexture"/>
+            <children>
+                <primitiveref id="BarCounterTop1" />
+            </children>
+        </component>
+        <component id="PoolChairLeg">   <!--1st leg-->
+            <transformation>
+                <scale x="0.2" y="2" z="0.2"/>
+                <rotate axis="x" angle="90" />
+                <rotate axis="z" angle="45" />
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <primitiveref id="BarCounterTop" />
+            </children>
+        </component>
+        <component id="PoolChairLeg1">  <!--2nd leg-->
+            <transformation>
+                <translate x="0" y="0" z="-0.8"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <componentref id="PoolChairLeg" />
+            </children>
+        </component>
+        <component id="PoolChairLeg2">  <!--3rd leg-->
+            <transformation>
+                <translate x="1.5" y="0" z="-0.8"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <componentref id="PoolChairLeg" />
+            </children>
+        </component>
+        <component id="PoolChairLeg3">  <!--4th leg-->
+            <transformation>
+                <translate x="1.5" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="whiteMaterial" />
+            </materials>
+            <texture id="none" length_s="0" length_t="0"/>
+            <children>
+                <componentref id="PoolChairLeg" />
+            </children>
+        </component>
+
+        <!-- POOL CHAIRS  -->
+        <component id="PoolChair">  <!--exterior chairs-->
+            <transformation>
+                <translate x="0" y="0.4" z="0"/>
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="sofaTexture"/>
+            <children>
+                <componentref id="PoolChairTop" />
+                <componentref id="PoolChairTop1" />
+                <componentref id="PoolChairBack" />
+                <componentref id="PoolChairBack1" />
+                <componentref id="PoolChairLeg" />
+                <componentref id="PoolChairLeg1" />
+                <componentref id="PoolChairLeg2" />
+                <componentref id="PoolChairLeg3" />
+            </children>
+        </component>
+        <component id="PoolChair1">
+            <transformation>
+                <translate x="6" y="0" z="0"/>
+                <rotate axis="y" angle="-45" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="PoolChair" />
+            </children>
+        </component>
+        <component id="PoolChair2">
+            <transformation>
+                <translate x="6" y="0" z="8"/>
+                <rotate axis="y" angle="20" />
+            </transformation>
+            <materials>
+                <material id="inherit" />
+            </materials>
+            <texture id="inherit"/>
+            <children>
+                <componentref id="PoolChair" />
+            </children>
+        </component>
+
+        <!-- ROOT  -->
+        <component id="demoRoot">
+            <transformation>
+                <translate x="0" y="0" z="1" />
+            </transformation>
+            <materials>
+                <material id="demoMaterial" />
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
+                <componentref id="Floor" />
+                <componentref id="ExteriorFloor" />
+                <componentref id="BarChair1" />
+                <componentref id="BarCounter1" />
+                <componentref id="BarChair2" />
+                <componentref id="BarCounter2" />
+                <componentref id="BarChair3" />
+                <componentref id="BarCounter3" />
+                <componentref id="BarCounter4" />
+                <componentref id="BarCounter5" />
+                <componentref id="BarCounter6" />
+                <componentref id="BarCounter7" />
+                <componentref id="BarCounter8" />
+                <componentref id="BarCounter9" />
+                <componentref id="BarCounter10" />
+                <componentref id="CounterTop1" />
+                <componentref id="CounterTop2" />
+                <componentref id="CounterTop3" />
+                <componentref id="CounterTop4" />
+                <componentref id="SofaComplete" />
+                <componentref id="Table" />
+                <componentref id="TableChair" />
+                <componentref id="TableChair1" />
+                <componentref id="TableChair2" />
+                <componentref id="TableChair3" />
+                <componentref id="Wall" />
+                <componentref id="SmallTable" />
+                <componentref id="TVTable" />
+                <componentref id="Wall1" />
+                <componentref id="Wall2" />
+                <componentref id="Wall3Part1" />
+                <componentref id="Wall3Part2" />
+                <componentref id="Wall3Part3" />
+                <componentref id="Wall3Part4" />
+                <componentref id="Wall3Part5" />
+                <componentref id="TV" />
+                <componentref id="Furniture" />
+                <componentref id="PoolChair1" />
+                <componentref id="PoolChair2" />
+            </children>
+        </component>
+
+    </components>
+</lxs>
+
+
+   

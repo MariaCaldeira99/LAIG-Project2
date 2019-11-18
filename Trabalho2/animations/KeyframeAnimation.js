@@ -1,0 +1,2 @@
+class KeyframeAnimation extends Animation{
+}
