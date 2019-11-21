@@ -259,7 +259,7 @@
             <plane npartsU="50" npartsV="50" />
         </primitive>
         <primitive id="patch">
-          <patch npartsU="50" npartsV="50" npointsU="4" npointsV="2">
+          <patch npointsU="4" npointsV="2" npartsU="50" npartsV="50" >
                 <controlpoint xx="3.0" yy="0.0"  zz="0.0" />
                 <controlpoint xx="3.0" yy="0.0"  zz="3.0" />
                 <controlpoint xx="3.0" yy="2.0"  zz="0.0" />

@@ -19,8 +19,26 @@ class XMLscene extends CGFscene {
      */
     init(application) {
         super.init(application);
-        this.sceneInited = false;
 
+
+        /*var controlPoints = [
+            [ //U=0
+              [-1.5, -1.5, 0.0, 1],
+              [-1.5, -1.5, 0.0, 1]
+            ],
+            [ //U=1
+              [0, -1.5, 3.0, 1],
+              [0.0, 1.5, 3.0, 1]
+            ],
+            [
+                [2,1,1,1],
+                [0,2,2,1]
+            ]
+        ];
+        this.patch = new Patch(this,3,2,5,5,controlPoints);*/
+
+        this.sceneInited = false;
+        
         this.initCameras();
 
         this.enableTextures(true);
@@ -135,7 +153,7 @@ class XMLscene extends CGFscene {
         if (this.sceneInited) {
             // Draw axis
             this.setDefaultAppearance();
-
+            //this.patch.display();
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }

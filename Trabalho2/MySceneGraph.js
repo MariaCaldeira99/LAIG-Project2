@@ -909,6 +909,14 @@ class MySceneGraph {
                     this.primitives[primitiveId] = new Plane(this.scene, npartsU, npartsV);
                     break;
                 case 'patch':
+                    var npointsU = this.reader.getFloat(grandChildren[0], 'npointsU');
+                    if (!(npointsU != null && !isNaN(npointsU) && npointsU >= 0))
+                        return "unable to parse npointsU of the primitive with ID = " + primitiveId;
+
+                    var npointsV = this.reader.getFloat(grandChildren[0], 'npointsV');
+                    if (!(npointsV != null && !isNaN(npointsV) && npointsV >= 0))
+                        return "unable to parse npointsV of the primitive with ID = " + primitiveId;
+    
                     var npartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
                     if (!(npartsU != null && !isNaN(npartsU) && npartsU >= 0))
                         return "unable to parse npartsU of the primitive with ID = " + primitiveId;
@@ -917,42 +925,30 @@ class MySceneGraph {
                     if (!(npartsV != null && !isNaN(npartsV) && npartsV >= 0))
                         return "unable to parse npartsV of the primitive with ID = " + primitiveId;
 
-                    var npointsU = this.reader.getFloat(grandChildren[0], 'npointsU');
-                    if (!(npointsU != null && !isNaN(npointsU) && npointsU >= 0))
-                        return "unable to parse npointsU of the primitive with ID = " + primitiveId;
+                    
+                    let controlPoints = [];
 
-                    var npointsV = this.reader.getFloat(grandChildren[0], 'npointsV');
-                    if (!(npointsV != null && !isNaN(npointsV) && npointsV >= 0))
-                        return "unable to parse npointsV of the primitive with ID = " + primitiveId;
+                    var grandgrandchildren = grandChildren[0].children;
 
-                    var controlPoints = [];
-
-                    for(var j = 0; j < grandChildren[0].children.length; j++){
-                        var xx = this.reader.getFloat(grandChildren[0].children[j], 'xx');
-                        if (!(xx != null && !isNaN(xx) && xx >= 0))
-                            return "unable to parse xx of the primitive with ID = " + primitiveId;
-                        var yy = this.reader.getFloat(grandChildren[0].children[j], 'yy');
-                        if (!(yy != null && !isNaN(yy) && yy >= 0))
-                            return "unable to parse npartsU of the primitive with ID = " + primitiveId;
-                        var zz = this.reader.getFloat(grandChildren[0].children[j], 'zz');
-                        if (!(zz != null && !isNaN(zz) && zz >= 0))
-                            return "unable to parse npartsU of the primitive with ID = " + primitiveId;
+                    for(var j = 0; j < grandgrandchildren.length; j++){
+                        var xx = this.reader.getFloat(grandgrandchildren[j], 'xx');
+                        var yy = this.reader.getFloat(grandgrandchildren[j], 'yy');
+                        var zz = this.reader.getFloat(grandgrandchildren[j], 'zz');
 
                         controlPoints.push([xx,yy,zz,1.0]);
                     }
 
-                    var controlPointsFinal = [];
-                    var k;
-
-                    for(var i = 0; i < npartsU - 1; i++){
-                        var tmp = [];
-                        for(var j = 0; j < npartsV - 1; j++){
-                            tmp.push(controlPoints.shift());
-                        }
-                        controlPointsFinal.push(tmp);
+                    var finalcontrolPoints = [];
+                    
+                    for (var j = 0; j <= (npointsU - 1); j++) {
+                        var list = [];
+                        for (var k = 0; k <= (npointsV - 1); k++)
+                            list.push(controlPoints.shift());
+                        
+                        finalcontrolPoints.push(list);
                     }
 
-                    this.primitives[primitiveId] = new Patch(this.scene, npartsU, npartsV,npointsU,npointsV,controlPointsFinal);
+                    this.primitives[primitiveId] = new Patch(this.scene, npointsU,npointsV,npartsU, npartsV,finalcontrolPoints);
                     break;
                 default:
                     console.warn("To do: Parse other primitives.");
