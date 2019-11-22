@@ -1,12 +1,15 @@
 class Animation{
-    /**
-     * @constructor
-     */
-    constructor(scene, id, time){
+    constructor(scene, id){
         this.scene = scene;
         this.id = id;
-        this.time = time;
+        this.previousTime = 0;
         this.matrix = mat4.create();
+    }
+
+    update(time) {
+
+        this.deltatime = time - this.previousTime;
+        this.previousTime = time;
     }
 
     apply(){

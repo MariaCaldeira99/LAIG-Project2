@@ -1,0 +1,3 @@
+class MySecurityCamera extends CGFobject{
+    
+}
