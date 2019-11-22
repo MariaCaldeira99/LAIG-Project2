@@ -762,7 +762,8 @@ class MySceneGraph {
             if (grandChildren.length != 1 ||
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
-                    grandChildren[0].nodeName != 'torus') && grandChildren[0].nodeName != 'plane' && grandChildren[0].nodeName != 'patch') {
+                    grandChildren[0].nodeName != 'torus') && grandChildren[0].nodeName != 'plane' && 
+                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2') {
                 return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)"
             }
 
@@ -949,6 +950,32 @@ class MySceneGraph {
                     }
 
                     this.primitives[primitiveId] = new Patch(this.scene, npointsU,npointsV,npartsU, npartsV,finalcontrolPoints);
+                    break;
+                case 'cylinder2':
+                    var base = this.reader.getFloat(grandChildren[0], 'base');
+                    if (!(base != null && !isNaN(base) && base >= 0))
+                        return "unable to parse base radius of the primitive with ID = " + primitiveId;
+
+                    var top = this.reader.getFloat(grandChildren[0], 'top');
+                    if (!(top != null && !isNaN(top) && top >= 0))
+                        return "unable to parse top radius of the primitive with ID = " + primitiveId;
+
+                    if (base == top && base == 0)
+                        return "primitive with ID = " + primitiveId + " can't have both radii equal to 0";
+
+                    var height = this.reader.getFloat(grandChildren[0], 'height');
+                    if (!(height != null && !isNaN(height) && height >= 0))
+                        return "unable to parse height of the primitive with ID = " + primitiveId;
+
+                    var slices = this.reader.getFloat(grandChildren[0], 'slices');
+                    if (!(slices != null && !isNaN(slices) && slices >= 0))
+                        return "unable to parse slices of the primitive with ID = " + primitiveId;
+
+                    var stacks = this.reader.getFloat(grandChildren[0], 'stacks');
+                    if (!(stacks != null && !isNaN(stacks) && stacks >= 0))
+                        return "unable to parse stacks of the primitive with ID = " + primitiveId;
+
+                    this.primitives[primitiveId] = new Cylinder2(this.scene, base, top, height, slices, stacks);
                     break;
                 default:
                     console.warn("To do: Parse other primitives.");
@@ -1322,6 +1349,6 @@ class MySceneGraph {
 
         //Process all component nodes
         //this.processNode(this.idRoot, null, null, 1, 1);
-        this.primitives["patch"].display();
+        this.primitives["cylinder2"].display();
     }
 }

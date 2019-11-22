@@ -37,6 +37,8 @@ class XMLscene extends CGFscene {
         ];
         this.patch = new Patch(this,3,2,5,5,controlPoints);*/
 
+        //this.cyl = new Cylinder2(this,1.5,1.5,3.0,50,50);
+
         this.sceneInited = false;
         
         this.initCameras();
@@ -154,6 +156,7 @@ class XMLscene extends CGFscene {
             // Draw axis
             this.setDefaultAppearance();
             //this.patch.display();
+            //this.cyl.display();
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }
