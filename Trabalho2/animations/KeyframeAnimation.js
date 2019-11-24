@@ -2,17 +2,17 @@ class KeyframeAnimation extends Animation{
     constructor(scene){
         super(scene);
 
-        this.instances = []; // [1, 2]
-        this.translations = [];
-        this.rotations=[];
-        this.scale = [];
+        this.instances = []; // Array with all instants
+        this.translations = []; //Array with all translations
+        this.rotations=[]; //Array with all rotations
+        this.scale = []; //Array with all scales
 
         this.animationMatrix;
 
         this.previousAnimationIndex = 0; // first animation
 
         this.firstTime; // time since animation started
-        this.deltaTime;
+        this.deltaTime; //current time - time since animation started
     }
 
     update() {
@@ -36,22 +36,36 @@ class KeyframeAnimation extends Animation{
             // matrix anterior e seguinte
             var previousAnimationTranslation = this.translations[this.previousAnimationIndex];
             var nextAnimationTranslation = this.translations[this.previousAnimationIndex + 1];
+
+            //Subtração entre a matrix seguinte e a anterior de forma a obter o array com a diferença entre as duas
             var periodicTranslation = this.subtractArrays(previousAnimationTranslation,nextAnimationTranslation);
+            //Multiplicar o array obtido anteriormente pelo fator, para obter a percentagem 
             periodicTranslation = this.multiplyArray(periodicTranslation, fator);
+            //Soma entre o array obtido anteriormente e a matrix anterior
             periodicTranslation = this.sumArrays(periodicTranslation, previousAnimationTranslation);
             this.animationMatrix = mat4.translate(this.animationMatrix, this.animationMatrix, periodicTranslation);
 
+            //rotation
+            // matrix anterior e seguinte
             var previousAnimationRotation = this.rotations[this.previousAnimationIndex];
             var nextAnimationRotation = this.rotations[this.previousAnimationIndex + 1];
+            //Subtração entre a matrix seguinte e a anterior de forma a obter o array com a diferença entre as duas
             var periodicRotation = this.subtractArrays(previousAnimationRotation,nextAnimationRotation);
+            //Multiplicar o array obtido anteriormente pelo fator, para obter a percentagem 
             periodicRotation = this.multiplyArray(periodicRotation, fator);
+            //Soma entre o array obtido anteriormente e a matrix anterior
+            periodicRotation = this.sumArrays(periodicRotation, previousAnimationRotation);
             this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, periodicRotation[0]*DEGREE_TO_RAD);
             this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, periodicRotation[1]*DEGREE_TO_RAD);
             this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, periodicRotation[2]*DEGREE_TO_RAD);
 
+            //scale
+            // matrix anterior e seguinte
             var previousAnimationScale = this.scale[this.previousAnimationIndex];
             var nextAnimationScale = this.scale[this.previousAnimationIndex + 1];
+            //Multiplica matrix anterior e seguinte
             var periodicScale = this.multiplyArrays(previousAnimationScale,nextAnimationScale);
+            //Multiplica array obtido anteriorment e multiplica-o pelo fator
             periodicScale = this.multiplyArray(periodicScale, fator);
             this.animationMatrix = mat4.scale(this.animationMatrix,this.animationMatrix, periodicScale);
         }
