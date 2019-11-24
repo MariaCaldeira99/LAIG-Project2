@@ -739,16 +739,16 @@ class MySceneGraph {
         return null;
     }
 
-    parseAnimations(animationsNode){
+    parseAnimations(animationsNode) {
         var children = animationsNode.children;
         var grandChildren = [];
         var grandgrandchildren = [];
         this.animations = [];
 
-        if(children.length == 0){
+        if (children.length == 0) {
             return null;
         }
-        
+
         // for each <animation> tag
         for (var i = 0; i < children.length; i++) {
 
@@ -773,17 +773,17 @@ class MySceneGraph {
             grandChildren = children[i].children;
 
             // for each <keyframe> tag
-            for(var j = 0; j < grandChildren.length; j++){
-                
+            for (var j = 0; j < grandChildren.length; j++) {
+
                 var instant = this.reader.getFloat(grandChildren[j], 'instant');
                 if (!(instant != null && !isNaN(instant)))
                     return "unable to parse instant of the animation coordinates for ID = " + animationID;
 
                 keyframeAnimationObject.instances.push(...[instant]);
-                
+
                 grandgrandchildren = grandChildren[j].children;
 
-                // for <tranlation>, <rotation>, <scale>
+                // for <translation>, <rotation>, <scale>
                 for (var k = 0; k < grandgrandchildren.length; k++) {
                     switch (grandgrandchildren[k].nodeName) {
                         case 'translate':
@@ -792,25 +792,25 @@ class MySceneGraph {
                             if (!Array.isArray(t_coordinates))
                                 return t_coordinates;
 
-    
+
                             //Update transformation matrix
                             //transfMatrix = mat4.translate(transfMatrix, transfMatrix, t_coordinates);
                             keyframeAnimationObject.translations.push(...[t_coordinates]);
                             break;
-    
+
                         case 'scale':
                             //Create scale array
                             var s_coordinates = this.parseCoordinates3D(grandgrandchildren[k], "scale transformation for ID " + animationID);
-    
+
                             if (!Array.isArray(s_coordinates))
                                 return s_coordinates;
 
-    
+
                             //Update transformation matrix
                             //transfMatrix = mat4.scale(transfMatrix, transfMatrix, s_coordinates);
                             keyframeAnimationObject.scale.push(...[s_coordinates]);
                             break;
-    
+
                         case 'rotate':
                             // angle_x
                             var angle_x = this.reader.getFloat(grandgrandchildren[k], 'angle_x');
@@ -825,8 +825,8 @@ class MySceneGraph {
                             // angle_z
                             var angle_z = this.reader.getFloat(grandgrandchildren[k], 'angle_z');
                             if (!(angle_z != null && !isNaN(angle_z)))
-                                return "unable to parse z-coordinate of the " + animationID;    
-                            
+                                return "unable to parse z-coordinate of the " + animationID;
+
                             var r_coordinates = [angle_x, angle_y, angle_z];
                             //Update transformation matrix
                             //transfMatrix = mat4.rotate(transfMatrix, transfMatrix, r_angle, r_axis_vec);
@@ -837,7 +837,7 @@ class MySceneGraph {
                 }
                 this.animations[animationID] = keyframeAnimationObject;
             }
-            
+
         }
 
         return null;
@@ -881,8 +881,8 @@ class MySceneGraph {
             if (grandChildren.length != 1 ||
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
-                    grandChildren[0].nodeName != 'torus') && grandChildren[0].nodeName != 'plane' && 
-                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2') {
+                    grandChildren[0].nodeName != 'torus') && grandChildren[0].nodeName != 'plane' &&
+                grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2') {
                 return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere or torus)"
             }
 
@@ -1036,7 +1036,7 @@ class MySceneGraph {
                     var npointsV = this.reader.getFloat(grandChildren[0], 'npointsV');
                     if (!(npointsV != null && !isNaN(npointsV) && npointsV >= 0))
                         return "unable to parse npointsV of the primitive with ID = " + primitiveId;
-    
+
                     var npartsU = this.reader.getFloat(grandChildren[0], 'npartsU');
                     if (!(npartsU != null && !isNaN(npartsU) && npartsU >= 0))
                         return "unable to parse npartsU of the primitive with ID = " + primitiveId;
@@ -1045,30 +1045,30 @@ class MySceneGraph {
                     if (!(npartsV != null && !isNaN(npartsV) && npartsV >= 0))
                         return "unable to parse npartsV of the primitive with ID = " + primitiveId;
 
-                    
+
                     let controlPoints = [];
 
                     var grandgrandchildren = grandChildren[0].children;
 
-                    for(var j = 0; j < grandgrandchildren.length; j++){
+                    for (var j = 0; j < grandgrandchildren.length; j++) {
                         var xx = this.reader.getFloat(grandgrandchildren[j], 'xx');
                         var yy = this.reader.getFloat(grandgrandchildren[j], 'yy');
                         var zz = this.reader.getFloat(grandgrandchildren[j], 'zz');
 
-                        controlPoints.push([xx,yy,zz,1.0]);
+                        controlPoints.push([xx, yy, zz, 1.0]);
                     }
 
                     var finalcontrolPoints = [];
-                    
+
                     for (var j = 0; j <= (npointsU - 1); j++) {
                         var list = [];
                         for (var k = 0; k <= (npointsV - 1); k++)
                             list.push(controlPoints.shift());
-                        
+
                         finalcontrolPoints.push(list);
                     }
 
-                    this.primitives[primitiveId] = new Patch(this.scene, npointsU,npointsV,npartsU, npartsV,finalcontrolPoints);
+                    this.primitives[primitiveId] = new Patch(this.scene, npointsU, npointsV, npartsU, npartsV, finalcontrolPoints);
                     break;
                 case 'cylinder2':
                     var base = this.reader.getFloat(grandChildren[0], 'base');
@@ -1145,7 +1145,7 @@ class MySceneGraph {
             var materialsIndex = nodeNames.indexOf("materials");
             var textureIndex = nodeNames.indexOf("texture");
             var childrenIndex = nodeNames.indexOf("children");
-            
+
 
             // Transformations
             var transfMatrix = mat4.create();
@@ -1219,7 +1219,7 @@ class MySceneGraph {
 
             //Animations
             var keyframeAnimation;
-            if (animationIndex >= 0){
+            if (animationIndex >= 0) {
                 var animationRef = this.reader.getString(grandChildren[animationIndex], 'id');
                 if (this.animations[animationRef] == null)
                     return "Animation " + animationRef + " doesn't exist in animayion array";
@@ -1401,16 +1401,17 @@ class MySceneGraph {
         if (component == null)
             return;
 
-            
+
+        //Apply transformations
+        this.scene.pushMatrix();
+        this.scene.multMatrix(component.transformationMatrix);
+
         //Apply animation
+        // WARNING -> as transformacoes sao aplicadas primeiros que as animacoes.... WTF????
         if (component.keyframeAnimation != null) {
             this.scene.pushMatrix();
             component.keyframeAnimation.apply();
         }
-        // WARNING -> as transformacoes sao aplicadas primeiros que as animacoes.... WTF????
-        //Apply transformations
-        this.scene.pushMatrix();
-        this.scene.multMatrix(component.transformationMatrix);
 
         //Child component inherits texture from parent
         if (component.textureID == "inherit") {
@@ -1490,11 +1491,9 @@ class MySceneGraph {
     }
 
     update(t) {
-        for(const compenentID in this.components) {
-            if(this.components[compenentID].keyframeAnimation != null){
-                //debugger;
-                this.components[compenentID].keyframeAnimation.update();
-            }
+        for (const compenentID in this.components) {
+            if (this.components[compenentID].keyframeAnimation != null)
+                this.components[compenentID].keyframeAnimation.update(t);
         }
     }
 

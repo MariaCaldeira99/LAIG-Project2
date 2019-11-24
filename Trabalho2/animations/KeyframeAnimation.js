@@ -7,53 +7,56 @@ class KeyframeAnimation extends Animation{
         this.rotations=[];
         this.scale = [];
 
-        this.animationMatrix;
-
-        this.previousAnimationIndex = 0; // first animation
+        this.animationMatrix = mat4.create();
+        this.animationIndex = 0; // first animation
 
         this.firstTime; // time since animation started
         this.deltaTime;
     }
 
-    update() {
+    update(t) {
         this.firstTime = this.firstTime || new Date().getTime();
-        var currentDate = new Date();
-        var currentTime = currentDate.getTime();
-        this.deltaTime = (currentTime - this.firstTime) / 1000;
+        this.deltaT = (t - this.firstTime) / 1000;
+        
+        if(this.deltaT < this.instances[0])
+            return;
 
         // update animation index
-        if (this.deltaTime > this.instances[this.previousAnimationIndex + 1]) {
-            this.previousAnimationIndex++;
+        if (this.deltaT > this.instances[this.animationIndex + 1]) {
+            this.animationIndex++;
         }
-        // 
-        if (this.deltaTime <= this.instances[this.instances.length - 1]) {
+         
+        if (this.deltaT <= this.instances[this.instances.length - 1]) {
             
-            var intervaloTempo = this.instances[this.previousAnimationIndex+1] - this.instances[this.previousAnimationIndex];
-            var fator = (this.deltaTime - this.instances[this.previousAnimationIndex])/intervaloTempo;
+            var intervaloTempo = this.instances[this.animationIndex+1] - this.instances[this.animationIndex];
+            var factor = (this.deltaT - this.instances[this.animationIndex])/intervaloTempo;
             
             this.animationMatrix = mat4.create();
             // translation
             // matrix anterior e seguinte
-            var previousAnimationTranslation = this.translations[this.previousAnimationIndex];
-            var nextAnimationTranslation = this.translations[this.previousAnimationIndex + 1];
-            var periodicTranslation = this.subtractArrays(previousAnimationTranslation,nextAnimationTranslation);
-            periodicTranslation = this.multiplyArray(periodicTranslation, fator);
-            periodicTranslation = this.sumArrays(periodicTranslation, previousAnimationTranslation);
-            this.animationMatrix = mat4.translate(this.animationMatrix, this.animationMatrix, periodicTranslation);
+            var previousTranslation = this.translations[this.animationIndex];
+            var nextTranslation = this.translations[this.animationIndex + 1];
+            var translationBot = this.multiplyArray(previousTranslation, 1-factor);
+            var translationTop = this.multiplyArray(nextTranslation, factor);
+            var translation = this.sumArrays(translationBot, translationTop);
+            this.animationMatrix = mat4.translate(this.animationMatrix, this.animationMatrix, translation);
 
-            var previousAnimationRotation = this.rotations[this.previousAnimationIndex];
-            var nextAnimationRotation = this.rotations[this.previousAnimationIndex + 1];
-            var periodicRotation = this.subtractArrays(previousAnimationRotation,nextAnimationRotation);
-            periodicRotation = this.multiplyArray(periodicRotation, fator);
-            this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, periodicRotation[0]*DEGREE_TO_RAD);
-            this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, periodicRotation[1]*DEGREE_TO_RAD);
-            this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, periodicRotation[2]*DEGREE_TO_RAD);
+            var previousRotation = this.rotations[this.animationIndex];
+            var nextRotation = this.rotations[this.animationIndex + 1];
+            var rotationBot = this.multiplyArray(previousRotation, 1-factor);
+            var rotationTop = this.multiplyArray(nextRotation, factor);
+            var rotation = this.sumArrays(rotationBot, rotationTop);
+            this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, rotation[0]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, rotation[1]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, rotation[2]*DEGREE_TO_RAD);
 
-            var previousAnimationScale = this.scale[this.previousAnimationIndex];
-            var nextAnimationScale = this.scale[this.previousAnimationIndex + 1];
-            var periodicScale = this.multiplyArrays(previousAnimationScale,nextAnimationScale);
-            periodicScale = this.multiplyArray(periodicScale, fator);
-            this.animationMatrix = mat4.scale(this.animationMatrix,this.animationMatrix, periodicScale);
+            var previousScale = this.scale[this.animationIndex];
+            var nextScale = this.scale[this.animationIndex + 1];
+
+            var scaleBot = this.multiplyArray(previousScale,1-factor);
+            var scaleTop = this.multiplyArray(nextScale, factor);
+            var scale = this.sumArrays(scaleTop, scaleBot);
+            this.animationMatrix = mat4.scale(this.animationMatrix,this.animationMatrix, scale);
         }
         else {
             this.animationMatrix = mat4.create();
@@ -69,36 +72,36 @@ class KeyframeAnimation extends Animation{
         this.scene.multMatrix(this.animationMatrix);
     }
 
-    subtractArrays(A1,A2){
-        var finalArray = [];
-        for(let i = 0; i < A1.length; i++){
-            finalArray.push(A2[i] - A1[i]);
+    subtractArrays(array2, array1){
+        var subtr = [];
+        for(let i = 0; i < array1.length; i++){
+            subtr.push(array2[i] - array1[i]);
         }
-        return finalArray;
+        return subtr;
     }
 
-    multiplyArray(Array1,fator){
-        var finalArray = [];
-        for(var i = 0; i < Array1.length; i++){
-            finalArray.push(Array1[i]*fator);
+    multiplyArray(array,fator){
+        var mult = [];
+        for(var i = 0; i < array.length; i++){
+            mult.push(array[i]*fator);
         }
-        return finalArray;
+        return mult;
     }
 
-    multiplyArrays(Array1,Array2){
-        var finalArray = [];
-        for(var i = 0; i < Array1.length; i++){
-            finalArray.push(Array1[i]*Array2[i]);
+    multiplyArrays(array1,array2){
+        var mult = [];
+        for(var i = 0; i < array1.length; i++){
+            mult.push(array1[i]*array2[i]);
         }
-        return finalArray;
+        return mult;
     }
 
-    sumArrays(A1,A2){
-        var finalArray = [];
-        for(let i = 0; i < A1.length; i++){
-            finalArray.push(A2[i] + A1[i]);
+    sumArrays(array1,array2){
+        var sum = [];
+        for(let i = 0; i < array1.length; i++){
+            sum.push(array2[i] + array1[i]);
         }
-        return finalArray;
+        return sum;
     }
 
     /*
