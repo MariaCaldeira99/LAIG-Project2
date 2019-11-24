@@ -36,15 +36,25 @@ class KeyframeAnimation extends Animation{
             // matrix anterior e seguinte
             var previousAnimationTranslation = this.translations[this.previousAnimationIndex];
             var nextAnimationTranslation = this.translations[this.previousAnimationIndex + 1];
-            var periodicTranslation = this.subtactArrays(previousAnimationTranslation,nextAnimationTranslation);
+            var periodicTranslation = this.subtractArrays(previousAnimationTranslation,nextAnimationTranslation);
             periodicTranslation = this.multiplyArray(periodicTranslation, fator);
             periodicTranslation = this.sumArrays(periodicTranslation, previousAnimationTranslation);
             this.animationMatrix = mat4.translate(this.animationMatrix, this.animationMatrix, periodicTranslation);
+
+            var previousAnimationRotation = this.rotations[this.previousAnimationIndex];
+            var nextAnimationRotation = this.rotations[this.previousAnimationIndex + 1];
+            var periodicRotation = this.subtractArrays(previousAnimationRotation,nextAnimationRotation);
+            periodicRotation = this.multiplyArray(periodicRotation, fator);
+            this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, periodicRotation[0]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, periodicRotation[1]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, periodicRotation[2]*DEGREE_TO_RAD);
         }
         else {
             this.animationMatrix = mat4.create();
             this.animationMatrix = mat4.translate(this.animationMatrix, this.animationMatrix, this.translations[this.translations.length - 1]);
-            debugger;
+            this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, this.rotations[this.rotations.length -1][0]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, this.rotations[this.rotations.length -1][1]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, this.rotations[this.rotations.length -1][2]*DEGREE_TO_RAD);
         }
     }
 
@@ -52,7 +62,7 @@ class KeyframeAnimation extends Animation{
         this.scene.multMatrix(this.animationMatrix);
     }
 
-    subtactArrays(A1,A2){
+    subtractArrays(A1,A2){
         var finalArray = [];
         for(let i = 0; i < A1.length; i++){
             finalArray.push(A2[i] - A1[i]);
