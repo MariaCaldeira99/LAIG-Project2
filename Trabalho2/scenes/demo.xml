@@ -262,8 +262,8 @@
     </animations>
 
     <primitives>
-        <primitive id="BarChairLeg">            <!--kitchen chair leg-->
-            <cylinder stacks="5" slices="20" height="1" top="0.07" base="0.07"/>
+        <primitive id="BarChairLeg">    <!--kitchen chair leg-->
+            <cylinder2 base="0.07" top="0.07" height="1" stacks="5" slices="20"/>
         </primitive>
         <primitive id="BarChairTop">            <!--kitchen chair seat-->
             <sphere radius="0.2" slices="50" stacks="50"/>
@@ -1627,7 +1627,7 @@
             </children>
         </component>
 
-        <component id="Painting">
+        <component id="Painting"> <!--Painting in the front wall-->
             <transformation>
                 <rotate axis="x" angle="90" />
                 <rotate axis="z" angle="-90" />
@@ -1643,7 +1643,7 @@
             </children>
         </component>
 
-        <component id="MiniExteriorTable">
+        <component id="MiniExteriorTable"> <!--Table beside the pool chair on the right side of the scene-->
             <transformation>
                 <translate x="5.6" y="0" z="0.5"/>
                 <rotate axis="y" angle="-45" />
@@ -1658,7 +1658,7 @@
             </children>
         </component>
 
-        <component id="MiniExteriorTable1">
+        <component id="MiniExteriorTable1"> <!--Table beside the pool chair on the left side of the scene-->
             <transformation>
                 <translate x="5.5" y="0" z="6"/>
                 <rotate axis="y" angle="20" />
