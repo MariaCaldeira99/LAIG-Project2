@@ -239,7 +239,7 @@
 
     <primitives>
         <primitive id="BarChairLeg">    <!--kitchen chair leg-->
-            <cylinder stacks="5" slices="20" height="1" top="0.07" base="0.07"/>
+            <cylinder2 base="0.07" top="0.07" height="1" stacks="5" slices="20"/>
         </primitive>
         <primitive id="BarChairTop">    <!--kitchen chair seat-->
             <sphere radius="0.2" slices="50" stacks="50"/>
