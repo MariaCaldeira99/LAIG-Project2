@@ -48,6 +48,12 @@ class KeyframeAnimation extends Animation{
             this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, periodicRotation[0]*DEGREE_TO_RAD);
             this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, periodicRotation[1]*DEGREE_TO_RAD);
             this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, periodicRotation[2]*DEGREE_TO_RAD);
+
+            var previousAnimationScale = this.scale[this.previousAnimationIndex];
+            var nextAnimationScale = this.scale[this.previousAnimationIndex + 1];
+            var periodicScale = this.multiplyArrays(previousAnimationScale,nextAnimationScale);
+            periodicScale = this.multiplyArray(periodicScale, fator);
+            this.animationMatrix = mat4.scale(this.animationMatrix,this.animationMatrix, periodicScale);
         }
         else {
             this.animationMatrix = mat4.create();
@@ -55,6 +61,7 @@ class KeyframeAnimation extends Animation{
             this.animationMatrix = mat4.rotateX(this.animationMatrix,this.animationMatrix, this.rotations[this.rotations.length -1][0]*DEGREE_TO_RAD);
             this.animationMatrix = mat4.rotateY(this.animationMatrix,this.animationMatrix, this.rotations[this.rotations.length -1][1]*DEGREE_TO_RAD);
             this.animationMatrix = mat4.rotateZ(this.animationMatrix,this.animationMatrix, this.rotations[this.rotations.length -1][2]*DEGREE_TO_RAD);
+            this.animationMatrix = mat4.scale(this.animationMatrix,this.animationMatrix, this.scale[this.scale.length -1]);
         }
     }
 
@@ -74,6 +81,14 @@ class KeyframeAnimation extends Animation{
         var finalArray = [];
         for(var i = 0; i < Array1.length; i++){
             finalArray.push(Array1[i]*fator);
+        }
+        return finalArray;
+    }
+
+    multiplyArrays(Array1,Array2){
+        var finalArray = [];
+        for(var i = 0; i < Array1.length; i++){
+            finalArray.push(Array1[i]*Array2[i]);
         }
         return finalArray;
     }
