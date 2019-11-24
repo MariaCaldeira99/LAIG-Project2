@@ -220,6 +220,43 @@
             <rotate axis="z" angle="45" />
         </transformation>
     </transformations>
+    
+    <animations>
+
+        <animation id="test" >
+
+            <keyframe instant="0">
+                <translate x="0" y="0" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+
+            <keyframe instant="1">
+                <translate x="1" y="2" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+
+            <keyframe instant="2">
+                <translate x="2" y="2" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+
+            <keyframe instant="3">
+                <translate x="3" y="2" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+
+            <keyframe instant="4">
+                <translate x="4" y="3" z="0"/>
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="0" y="0" z="0" />
+            </keyframe>
+
+        </animation>
+    </animations>
 
     <primitives>
         <primitive id="BarChairLeg">    <!--kitchen chair leg-->
@@ -646,6 +683,7 @@
             <transformation>
                 <transformationref id="Sofa"/>
             </transformation>
+            <animationref id="test" />
             <materials>
                 <material id="inherit" />
             </materials>

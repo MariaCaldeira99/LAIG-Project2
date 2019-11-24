@@ -39,6 +39,8 @@ class XMLscene extends CGFscene {
 
         //this.cyl = new Cylinder2(this,1.5,1.5,3.0,50,50);
 
+        //this.rect = new MyRectangle(this,1,-1,0.5,-0.5);
+
         this.sceneInited = false;
         
         this.initCameras();
@@ -52,6 +54,16 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.setUpdatePeriod(100);
+
+        this.testShaders = new CGFshader(this.gl, "shaders/shader.vert", "shaders/shader.frag");
+
+        // set update period per animations in miliseconds
+        this.setUpdatePeriod(100);
+    }
+
+    update(t) {
+        if(this.sceneInited)
+            this.graph.update(t);
     }
 
     /**
@@ -154,9 +166,11 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             // Draw axis
+            this.axis.display();
             this.setDefaultAppearance();
             //this.patch.display();
             //this.cyl.display();
+            //this.rect.display();
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }
