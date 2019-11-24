@@ -9,6 +9,7 @@ class MySecurityCamera extends CGFobject{
         this.scene.setActiveShader(this.scene.securityShader);
         this.scene.textureRTT.bind(0);
         this.screen.display();
+        this.scene.textureRTT.unbind(0);
 
         this.scene.setActiveShader(this.scene.defaultShader);
     }
