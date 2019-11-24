@@ -20,7 +20,5 @@ class Animation {
     update(t){
         this.firstTime = this.firstTime || new Date().getTime();
         this.deltaT = (t - this.firstTime) / 1000;
-
-        
     }
 }

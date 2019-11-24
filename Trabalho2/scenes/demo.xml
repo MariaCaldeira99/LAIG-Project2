@@ -873,7 +873,7 @@
         </component>
 
         <!--SOFA-->
-        <component id="SofaComplete">            <!--Completed Sofa-->
+        <component id="Sofa">            <!--Completed Sofa-->
             <transformation>
                 <scale x="0.8" y="1" z="1"/>
                 <translate x="-1" y="0" z="8"/>
@@ -1164,7 +1164,7 @@
                 <primitiveref id="BarCounterTop1" />
             </children>
         </component>
-        <component id="ExteriorFloor">            <!--EXTERIOR FLOOR-->
+        <component id="Exterior Floor">            <!--EXTERIOR FLOOR-->
             <transformation>
                 <rotate axis="x" angle="90" />
                 <rotate axis="y" angle="180" />
@@ -1425,7 +1425,7 @@
 
         <!--LIVING ROOM CABINET-->
 
-        <component id="FurnitureBottom">            <!--Furniture sides-->
+        <component id="FurnitureBottom">            <!--Cupboard sides-->
             <transformation>
                 <scale x="1" y="1.5" z="3"/>
                 <rotate axis="x" angle="90" />
@@ -1439,7 +1439,7 @@
                 <primitiveref id="BarCounter" />
             </children>
         </component>
-        <component id="FurnitureTop">            <!--Furniture top-->
+        <component id="FurnitureTop">            <!--Cupboard top-->
             <transformation>
                 <scale x="1" y="1" z="3"/>
                 <rotate axis="x" angle="90" />
@@ -1453,7 +1453,7 @@
                 <primitiveref id="BarCounterTop1" />
             </children>
         </component>
-        <component id="Furniture">
+        <component id="Cupboard">
             <transformation>
                 <translate x="-6.7" y="2" z="5"/>
             </transformation>
@@ -1629,10 +1629,10 @@
 
         <component id="Painting"> <!--Painting in the front wall-->
             <transformation>
-                <rotate axis="x" angle="90" />
                 <rotate axis="z" angle="-90" />
-                <translate x="-5" y="-7.1" z="-3.2"/>
-                <scale x="2" y="2" z="2"/>
+                <rotate axis="y" angle="-90" />
+                <translate x="5" y="-7" z="4"/>
+                <scale x="2.8" y="1" z="2.5"/>
             </transformation>
             <materials>
                 <material id="demoMaterial" />
@@ -1684,23 +1684,23 @@
             <texture id="none" length_s="1" length_t="1"/>
             <children>
                 <componentref id="Floor" />
-                <componentref id="ExteriorFloor" />
-                <componentref id="Bar Stools" />
+                <componentref id="House Structure"/>
                 <componentref id="Kitchen" />
-                <componentref id="SofaComplete" />
+                <componentref id="Bar Stools" />
                 <componentref id="Table" />
                 <componentref id="TableChair" />
                 <componentref id="TableChair1" />
                 <componentref id="TableChair2" />
                 <componentref id="TableChair3" />
+                <componentref id="Sofa" />
                 <componentref id="SmallTable" />
                 <componentref id="TVTable" />
-                <componentref id="House Structure"/>
                 <componentref id="TV" />
-                <componentref id="Furniture" />
+                <componentref id="Painting" />
+                <componentref id="Cupboard" />
+                <componentref id="Exterior Floor" />
                 <componentref id="PoolChair1" />
                 <componentref id="PoolChair2" />
-                <componentref id="Painting" />
                 <componentref id="MiniExteriorTable" />
                 <componentref id="MiniExteriorTable1" />
             </children>
