@@ -54,7 +54,9 @@ class MyInterface extends CGFinterface {
         let cameraArray = Object.keys(graph.cameras);
 
         this.gui.add(graph, 'currentView', cameraArray).name("Camera").onChange(graph.changeCamera.bind(graph));
+        this.gui.add(graph, 'currentSecurityView', cameraArray).name("Security Camera").onChange(graph.changeSecurityCamera.bind(graph));
     }
+
 
     /**
      * initKeys

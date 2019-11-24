@@ -367,6 +367,7 @@ class MySceneGraph {
         if (this.cameras[this.currentView] == null) {
             this.onXMLError("The view defined as default(" + this.currentView + ") doesn't exist.");
         }
+        this.currentSecurityView = this.currentView;
 
         this.log("Parsed views.");
         return null;
@@ -1457,7 +1458,10 @@ class MySceneGraph {
      */
     changeCamera() {
         this.scene.camera = this.cameras[this.currentView];
-        this.scene.interface.setActiveCamera(this.scene.camera);
+    }
+
+    changeSecurityCamera() {
+        this.scene.securityCamera.camera = this.cameras[this.currentSecurityView];
     }
 
     /**
@@ -1501,6 +1505,5 @@ class MySceneGraph {
 
         //Process all component nodes
         this.processNode(this.idRoot, null, null, 1, 1);
-        //this.primitives["cylinder2"].display();
     }
 }

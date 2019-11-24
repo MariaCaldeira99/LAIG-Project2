@@ -8,8 +8,6 @@ class MyComponent{
         this.length_t = length_t;
         this.componentChild = componentChild;
         this.primitiveChild = primitiveChild;
-
-        // animation
         this.keyframeAnimation;
     }
 

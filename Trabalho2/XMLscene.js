@@ -20,29 +20,8 @@ class XMLscene extends CGFscene {
     init(application) {
         super.init(application);
 
-
-        /*var controlPoints = [
-            [ //U=0
-              [-1.5, -1.5, 0.0, 1],
-              [-1.5, -1.5, 0.0, 1]
-            ],
-            [ //U=1
-              [0, -1.5, 3.0, 1],
-              [0.0, 1.5, 3.0, 1]
-            ],
-            [
-                [2,1,1,1],
-                [0,2,2,1]
-            ]
-        ];
-        this.patch = new Patch(this,3,2,5,5,controlPoints);*/
-
-        //this.cyl = new Cylinder2(this,1.5,1.5,3.0,50,50);
-
-        //this.rect = new MyRectangle(this,1,-1,0.5,-0.5);
-
         this.sceneInited = false;
-        
+
         this.initCameras();
 
         this.enableTextures(true);
@@ -53,17 +32,22 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.setUpdatePeriod(100);
-
-        this.testShaders = new CGFshader(this.gl, "shaders/shader.vert", "shaders/shader.frag");
-
         // set update period per animations in miliseconds
         this.setUpdatePeriod(100);
+
+        this.securityCamera = new MySecurityCamera(this);
+        this.securityCamera.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.securityShader = new CGFshader(this.gl, "shaders/shader.vert", "shaders/shader.frag");
+        var canvas = document.body;
+        this.canvasWidth = canvas.clientWidth;
+        this.canvasHeight = canvas.clientHeight;
+        this.textureRTT = new CGFtextureRTT(this, this.canvasWidth, this.canvasHeight);
     }
 
     update(t) {
-        if(this.sceneInited)
+        if (this.sceneInited)
             this.graph.update(t);
+            this.securityShader.setUniformsValues({time:  t / 10 % 100 });
     }
 
     /**
@@ -111,8 +95,6 @@ class XMLscene extends CGFscene {
         }
     }
 
-  
-
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -127,25 +109,28 @@ class XMLscene extends CGFscene {
         this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
 
         this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2], this.graph.ambient[3]);
-        
+
         this.initLights();
-        
+
         //Make the initial camera equal to the default.
         this.graph.changeCamera();
         //Add the lights check box
         this.interface.addLightsGroup(this.graph);
         //Add the cameras dropdown menu 
         this.interface.addViewsGroup(this.graph);
-    
+
         this.sceneInited = true;
     }
 
     /**
      * Displays the scene.
      */
-    display() {
+    render(camera) {
         // ---- BEGIN Background, camera and axis setup
-
+        if(camera != undefined){
+            this.camera = camera;
+            this.interface.setActiveCamera(this.camera);
+        }
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -165,17 +150,30 @@ class XMLscene extends CGFscene {
         }
 
         if (this.sceneInited) {
-            // Draw axis
-            this.axis.display();
+            //this.axis.display();
             this.setDefaultAppearance();
-            //this.patch.display();
-            //this.cyl.display();
-            //this.rect.display();
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
         }
 
         this.popMatrix();
         // ---- END Background, camera and axis setup
+    }
+
+    display() {
+
+        if (this.sceneInited) {
+            this.textureRTT.attachToFrameBuffer();
+            this.render(this.graph.cameras[this.graph.currentSecurityView]);
+            this.textureRTT.detachFromFrameBuffer();
+
+            this.render(this.graph.cameras[this.graph.currentView]);
+
+            this.gl.disable(this.gl.DEPTH_TEST);
+            this.securityCamera.display();
+            this.gl.enable(this.gl.DEPTH_TEST);
+        }
+
+
     }
 }

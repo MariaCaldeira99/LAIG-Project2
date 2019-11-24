@@ -4,15 +4,19 @@ precision highp float;
 
 varying vec2 vTextureCoord;
 
+uniform float time;
 uniform sampler2D uSampler;
 uniform sampler2D uSampler2;
 
 void main() {
-	vec4 color = texture2D(uSampler, vTextureCoord);
-	vec4 filter = texture2D(uSampler2, vec2(0.0,0.1)+vTextureCoord);
-
-	if (filter.b > 0.5)
-		color=vec4(0.52, 0.18, 0.11, 1.0);
+	vec4 texColor = texture2D(uSampler, vec2(1.0-vTextureCoord.x, vTextureCoord.y));
 	
-	gl_FragColor = color;
+	vec2 centerToPos = vTextureCoord - vec2(0.5,0.5);
+    float dist = length(centerToPos);
+ 
+    float perc = 1.0 - (dist/0.55);
+    vec4 color = vec4(texColor.xyz * perc, 1);
+	float offset = sin((vTextureCoord.y + time) * 60.0)*0.01+0.1;
+
+	gl_FragColor = color + offset * 0.5;
 }
