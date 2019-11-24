@@ -223,7 +223,7 @@
     </transformations>
     
     <animations>
-        <animation id="Chair4" >
+        <animation id="Chair4" > <!--Animacao para as cadeirasbda mesa-->
             <keyframe instant="0">
                 <translate x="0" y="0" z="0"/>
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
@@ -1548,7 +1548,7 @@
             </children>
         </component>
 
-        <component id="Painting">
+        <component id="Painting"> <!--Painting in the front wall-->
             <transformation>
                 <rotate axis="x" angle="90" />
                 <rotate axis="z" angle="-90" />
@@ -1564,7 +1564,7 @@
             </children>
         </component>
 
-        <component id="MiniExteriorTable">
+        <component id="MiniExteriorTable"> <!--Table beside the pool chair on the right side of the scene-->
             <transformation>
                 <translate x="5.6" y="0" z="0.5"/>
                 <rotate axis="y" angle="-45" />
@@ -1579,7 +1579,7 @@
             </children>
         </component>
 
-        <component id="MiniExteriorTable1">
+        <component id="MiniExteriorTable1"> <!--Table beside the pool chair on the left side of the scene-->
             <transformation>
                 <translate x="5.5" y="0" z="6"/>
                 <rotate axis="y" angle="20" />
