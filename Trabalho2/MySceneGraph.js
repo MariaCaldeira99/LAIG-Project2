@@ -792,9 +792,7 @@ class MySceneGraph {
                             if (!Array.isArray(t_coordinates))
                                 return t_coordinates;
 
-
                             //Update transformation matrix
-                            //transfMatrix = mat4.translate(transfMatrix, transfMatrix, t_coordinates);
                             keyframeAnimationObject.translations.push(...[t_coordinates]);
                             break;
 
@@ -805,9 +803,7 @@ class MySceneGraph {
                             if (!Array.isArray(s_coordinates))
                                 return s_coordinates;
 
-
                             //Update transformation matrix
-                            //transfMatrix = mat4.scale(transfMatrix, transfMatrix, s_coordinates);
                             keyframeAnimationObject.scale.push(...[s_coordinates]);
                             break;
 
@@ -829,7 +825,6 @@ class MySceneGraph {
 
                             var r_coordinates = [angle_x, angle_y, angle_z];
                             //Update transformation matrix
-                            //transfMatrix = mat4.rotate(transfMatrix, transfMatrix, r_angle, r_axis_vec);
                             keyframeAnimationObject.rotations.push(...[r_coordinates]);
 
                             break;
@@ -837,11 +832,8 @@ class MySceneGraph {
                 }
                 this.animations[animationID] = keyframeAnimationObject;
             }
-
         }
-
         return null;
-
     }
 
     /**
@@ -850,12 +842,8 @@ class MySceneGraph {
      */
     parsePrimitives(primitivesNode) {
         var children = primitivesNode.children;
-
         this.primitives = [];
-
         var grandChildren = [];
-
-        var greatgrandChildren = [];
 
         // Any number of primitives.
         for (var i = 0; i < children.length; i++) {
